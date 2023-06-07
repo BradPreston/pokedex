@@ -1,27 +1,6 @@
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
-
-type Context = {
-	query: {
-		slug: string;
-	};
-};
-
-export async function getServerSideProps(context: Context) {
-	const { slug } = context.query;
-	const res = await fetch(
-		`${process.env.NEXT_PUBLIC_BASE_URL}/api/pokemon/${slug}`
-	);
-	const pokemon = await res.json();
-	return {
-		props: {
-			pokemon
-		}
-	};
-}
-
-type Props = {
-	pokemon: Pokemon;
-};
+import paths from '../../../data/paths';
 
 type Pokemon = {
 	_id: string;
@@ -34,6 +13,27 @@ type Pokemon = {
 	sprite: string;
 	types: string[];
 	weight: number;
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	return {
+		paths: paths,
+		fallback: true
+	};
+};
+
+export const getStaticProps: GetStaticProps = async (context) => {
+	const res = await fetch(
+		`${process.env.NEXT_PUBLIC_BASE_URL}/api/pokemon/${context.params?.slug}`
+	);
+	const pokemon = await res.json();
+	return {
+		props: { pokemon }
+	};
+};
+
+type Props = {
+	pokemon: Pokemon;
 };
 
 export default function OnePokemon({ pokemon }: Props) {

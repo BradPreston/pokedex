@@ -1,4 +1,6 @@
-export async function getServerSideProps() {
+import Link from 'next/link';
+
+export async function getStaticProps() {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pokemon`);
 	const data = await res.json();
 	return {
@@ -32,7 +34,9 @@ export default function Pokemon({ data }: Props) {
 
 			<ul>
 				{data.map((pkmn: Pokemon) => (
-					<li key={pkmn.pokedex_number}>{pkmn.name}</li>
+					<li key={pkmn.pokedex_number}>
+						<Link href={`/pokemon/${pkmn.name}`}>{pkmn.name}</Link>
+					</li>
 				))}
 			</ul>
 		</>
