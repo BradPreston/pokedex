@@ -1,5 +1,5 @@
 export async function getServerSideProps() {
-	const res = await fetch('http://localhost:3000/api/pokemon');
+	const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/pokemon`);
 	const data = await res.json();
 	return {
 		props: {
@@ -8,7 +8,33 @@ export async function getServerSideProps() {
 	};
 }
 
-export default function Pokemon(data: any[]) {
-	console.log(data);
-	return <h1>Pokemon</h1>;
+type Props = {
+	data: Pokemon[];
+};
+
+type Pokemon = {
+	_id: string;
+	color: string;
+	description: string;
+	height: number;
+	name: string;
+	pokedex_number: number;
+	shape: string;
+	sprite: string;
+	types: string[];
+	weight: number;
+};
+
+export default function Pokemon({ data }: Props) {
+	return (
+		<>
+			<h1>Pokemon</h1>
+
+			<ul>
+				{data.map((pkmn: Pokemon) => (
+					<li key={pkmn.pokedex_number}>{pkmn.name}</li>
+				))}
+			</ul>
+		</>
+	);
 }
