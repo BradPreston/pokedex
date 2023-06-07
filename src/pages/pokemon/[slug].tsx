@@ -47,6 +47,7 @@ export default function OnePokemon({ pokemon }: Props) {
 						height={100}
 						width={100}
 						alt={`A picture of ${pokemon.name}`}
+						loading='eager'
 					/>
 					<div style={{ display: 'flex', gap: '20px' }}>
 						<p>
