@@ -39,29 +39,34 @@ type Props = {
 export default function OnePokemon({ pokemon }: Props) {
 	return (
 		<>
-			<h1 style={{ color: pokemon.color }}>{pokemon.name}</h1>
-			<Image
-				src={pokemon.sprite}
-				height={100}
-				width={100}
-				alt={`A picture of ${pokemon.name}`}
-			/>
-			<div style={{ display: 'flex', gap: '20px' }}>
-				<p>
-					height: {Math.floor(pokemon.height / 12)}&apos; {pokemon.height % 12}
-					&quot;
-				</p>
-				<p>weight: {pokemon.weight} lbs</p>
-			</div>
-			<p>
-				Types:{' '}
-				{pokemon.types.map((type: string) => (
-					<span style={{ paddingLeft: '20px' }} key={type}>
-						{type}
-					</span>
-				))}
-			</p>
-			<p>Description: {pokemon.description}</p>
+			{pokemon ? (
+				<>
+					<h1 style={{ color: pokemon.color }}>{pokemon.name}</h1>
+					<Image
+						src={pokemon.sprite}
+						height={100}
+						width={100}
+						alt={`A picture of ${pokemon.name}`}
+					/>
+					<div style={{ display: 'flex', gap: '20px' }}>
+						<p>
+							height: {Math.floor(pokemon.height / 12)}&apos;{' '}
+							{pokemon.height % 12}
+							&quot;
+						</p>
+						<p>weight: {pokemon.weight} lbs</p>
+					</div>
+					<p>
+						Types:{' '}
+						{pokemon.types.map((type: string) => (
+							<span style={{ paddingLeft: '20px' }} key={type}>
+								{type}
+							</span>
+						))}
+					</p>
+					<p>Description: {pokemon.description}</p>
+				</>
+			) : null}
 		</>
 	);
 }
